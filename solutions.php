@@ -91,12 +91,12 @@ require __DIR__ . '/includes/header.php';
         <div class="mt-12 grid gap-6 lg:grid-cols-3">
             <?php
             $platforms = [
-                ['bi-bullseye', 'Shooting Sports Suite', 'shootingsports.in', 'https://shootingsports.in', 'Purpose-built for rifle, pistol and shotgun events with compliant scoring and deep analytics.', [
-                    'Event handling: match setup, relays, squadding, live scores',
-                    'Scoring workflows with ISSF / NRAI validations',
-                    'Automated reports, certificates and medal tallies',
-                    'Association & club MIS: memberships, batches, events, notices',
-                    'Performance analytics: shot charts, group size, trends',
+                ['bi-buildings', 'Sports Infrastructure', 'sportsinfrax.com', 'https://sportsinfrax.com', 'Manage sports facilities, venues and assets with online discovery, bookings and maintenance.', [
+                    'Facility & venue directory (grounds, courts, ranges, pools)',
+                    'Online slot booking with e-payments and reminders',
+                    'Membership, passes and access management',
+                    'Maintenance, asset and staff scheduling',
+                    'Utilization, occupancy and revenue analytics',
                 ]],
                 ['bi-trophy', 'Multi-Sport MIS', 'sportsmis.com', 'https://sportsmis.com', 'A single operating system for federations, leagues and academies across every sport.', [
                     'Online registrations with e-payments and WhatsApp confirmations',
