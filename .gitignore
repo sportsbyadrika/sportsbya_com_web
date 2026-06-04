@@ -1,0 +1,14 @@
+# Node / Tailwind tooling
+node_modules/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+
+# Server logs
+error_log
+*.log
+
+# Local environment overrides
+.env
