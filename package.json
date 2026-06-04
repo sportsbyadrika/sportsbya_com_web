@@ -1,0 +1,14 @@
+{
+  "name": "sportsbya-com-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SportsbyA Tech company website (PHP + Tailwind CSS)",
+  "scripts": {
+    "build:css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/app.css --minify",
+    "watch:css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/app.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.0.0",
+    "tailwindcss": "^4.0.0"
+  }
+}

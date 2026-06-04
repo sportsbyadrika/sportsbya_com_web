@@ -1,0 +1,38 @@
+# SportsbyA Tech — clean URLs (no .php extension)
+
+Options -Indexes +FollowSymLinks
+DirectoryIndex index.php index.html
+
+RewriteEngine On
+RewriteBase /
+
+# Force HTTPS (uncomment on production if not handled upstream)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# Redirect external requests for *.php to the clean URL (strip extension)
+RewriteCond %{THE_REQUEST} \s/+([^.\s?]+)\.php[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L,NE]
+
+# Pretty blog post URLs: /blog/my-post -> blog.php?slug=my-post
+RewriteRule ^blog/([A-Za-z0-9_-]+)/?$ blog.php?slug=$1 [L,QSA]
+
+# Internally map a clean URL to its .php file when one exists
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.+?)/?$ $1.php [L]
+
+# Custom 404
+ErrorDocument 404 /404.php
+
+# --- Basic hardening ---
+# Block direct web access to internal directories
+RewriteRule ^(includes|sql)/ - [F,L]
+
+<Files ~ "^(config|Mailer)\.php$">
+    Require all denied
+</Files>
+
+<FilesMatch "\.(sql|md|log)$">
+    Require all denied
+</FilesMatch>
