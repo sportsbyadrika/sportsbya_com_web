@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Our Team | SportsbyA Tech</title>
+    <meta name="description" content="Meet the leadership team and subject matter experts behind SportsbyA Tech." />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <style>
+      :root{
+        --brand:#f97316;
+        --brand-2:#0ea5e9;
+        --dark:#0f172a;
+      }
+      body{ font-family: system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans"; background:#f8fafc; }
+      .navbar{ box-shadow: 0 2px 8px rgba(15,23,42,.08); }
+      .navbar .btn-outline-primary{ border-color: var(--brand); color: var(--brand); }
+      .navbar .btn-outline-primary:hover{ background:var(--brand); color:#fff; }
+      .hero{
+        background: linear-gradient(120deg, rgba(249,115,22,.12), rgba(14,165,233,.12));
+        padding: 5rem 0;
+      }
+      .hero h1{ font-weight: 800; letter-spacing:-.02em; }
+      .hero p{ max-width:600px; }
+      .team-card{
+        background:#fff;
+        border-radius:24px;
+        padding:2rem;
+        box-shadow: 0 25px 60px rgba(15,23,42,.08);
+        height:100%;
+      }
+      .team-card img{
+        width:120px;
+        height:120px;
+        object-fit:cover;
+        border-radius: 30px;
+        border:4px solid rgba(249,115,22,.3);
+      }
+      .pill{
+        display:inline-flex;
+        align-items:center;
+        gap:.35rem;
+        padding:.35rem .9rem;
+        border-radius:999px;
+        font-size:.85rem;
+        background:rgba(249,115,22,.12);
+        color:var(--brand);
+        font-weight:600;
+      }
+      .linkedin-link{ color:var(--brand-2); text-decoration:none; font-weight:600; }
+      .linkedin-link:hover{ color:var(--brand); }
+      .experts-grid{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+        gap:1.5rem;
+      }
+      .expert-card{
+        background:#fff;
+        border-radius:18px;
+        padding:1.5rem;
+        box-shadow:0 15px 35px rgba(15,23,42,.06);
+      }
+      .expert-card h5{ margin-bottom:.35rem; }
+      footer{ padding:2rem 0; color:#475569; }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-white sticky-top">
+      <div class="container py-2">
+        <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="index.html">
+          <img src="sba-logo.png" alt="SportsbyA Logo" class="rounded" width="40" height="40"/>
+          <span>SportsbyA Tech</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+            <li class="nav-item"><a class="nav-link" href="index.html#services">Solutions</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#analytics">Analytics</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="our-team.html">Our Team</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+            <li class="nav-item ms-lg-3"><a class="btn btn-primary" href="index.html#contact">Get Started</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero text-center text-lg-start">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-7">
+            <span class="pill mb-3"><i class="bi bi-people-fill"></i>Meet the Team</span>
+            <h1 class="display-4 mb-3">Purpose-driven builders of sport-tech for India</h1>
+            <p class="lead">SportsbyA Tech brings together elite athletes, technologists, and product leaders who understand the realities of grassroots sport. Explore the people shaping our product vision, culture, and subject matter expertise.</p>
+          </div>
+          <div class="col-lg-5 text-center">
+            <img src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=600&q=80" class="img-fluid rounded-4 shadow" alt="Sports team huddle" />
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="py-5">
+      <div class="container">
+        <div class="mb-5 text-center">
+          <p class="text-uppercase text-muted fw-semibold">Leadership</p>
+          <h2 class="fw-bold mb-4">The faces behind SportsbyA Tech</h2>
+          <p class="text-secondary">We combine lived experience as athletes with product strategy and community building to craft athlete-first technology.</p>
+        </div>
+
+        <div class="row g-4 mb-5">
+          <div class="col-md-6">
+            <article class="team-card text-center text-md-start">
+              <div class="d-flex flex-column flex-md-row align-items-center gap-4">
+                <img src="adrika.jpg" alt="Adrika Narayanan" loading="lazy" />
+                <div>
+                  <div class="pill mb-2">Founder & Director</div>
+                  <h3 class="h4">Adrika Narayanan</h3>
+                  <p class="text-secondary">Adrika is a renowned pistol shooter who represented Kerala at the National Games 2025 while simultaneously pursuing her B.Tech at the Government Engineering College, Barton Hill, Thiruvananthapuram. She brings the athlete’s perspective to every product sprint.</p>
+                  <a class="linkedin-link" href="https://www.linkedin.com/in/adrika-narayanan-5419a5275/" target="_blank" rel="noreferrer"><i class="bi bi-linkedin me-1"></i>Connect on LinkedIn</a>
+                </div>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-6">
+            <article class="team-card text-center text-md-start">
+              <div class="d-flex flex-column flex-md-row align-items-center gap-4">
+                <img src="ng.jpg" alt="Narayanan G" loading="lazy" />
+                <div>
+                  <div class="pill mb-2">Consultant Product Owner</div>
+                  <h3 class="h4">Narayanan G</h3>
+                  <p class="text-secondary">Narayanan steers our product roadmaps with a focus on usability, compliance, and scalable workflows for federations and academies. He works closely with athletes and coaches to translate needs into elegant platform experiences.</p>
+                  <a class="linkedin-link" href="https://www.linkedin.com/in/narayananng/" target="_blank" rel="noreferrer"><i class="bi bi-linkedin me-1"></i>Connect on LinkedIn</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <section class="mb-5">
+          <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between mb-4">
+            <div>
+              <p class="text-uppercase text-muted fw-semibold mb-1">Cunsultant Subject Matter Experts</p>
+              <h2 class="fw-bold">Grounded expertise from range to field</h2>
+              <p class="text-secondary mb-0">Our SME network coaches, analyses, and validates every feature so the platform mirrors day-to-day realities across disciplines.</p>
+            </div>
+            <!--<a href="contact.html" class="btn btn-outline-primary mt-3 mt-md-0">Invite Us for a Workshop</a>-->
+          </div>
+          <div class="experts-grid">
+            <article class="expert-card">
+              <p class="pill mb-3">Shooting Sports</p>
+              <h5>H/Capt. R Pandyan (Retd.)</h5>
+              <p class="text-secondary small mb-0">Former Coach Indian Shooting Team &amp; ISSF 'B' Judge and Coach helping us validate biomechanics dashboards, trigger analytics, and call-room workflows.</p>
+            </article>
+            <article class="expert-card">
+              <p class="pill mb-3">Shooting Sports</p>
+              <h5>Mr. Vipindas.V</h5>
+              <p class="text-secondary small mb-0">ISSF Judge "Class B" & ISSF Coach "Class D", support us in Rifle shooting and Event management</p>
+            </article>
+            <article class="expert-card">
+              <p class="pill mb-3">Athletics </p>
+              <h5>Mr. Huny Subramanion R</h5>
+              <p class="text-secondary small mb-0">Baseball Softball and Athletics Coach helping us in our Event workflows</p>
+            </article>
+            
+          </div>
+        </section>
+
+        <section class="py-4 px-4 px-md-5 rounded-4" style="background:var(--dark); color:#fff;">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+              <h2 class="fw-bold mb-2">Want to collaborate with our experts?</h2>
+              <p class="mb-0 text-white-50">Share your challenge—whether it is competition data capture, talent pathways, or athlete wellness—and we will assemble the right specialist pod.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+              <a href="mailto:info@shootingsports.in" class="btn btn-light btn-lg w-100 w-lg-auto">Email the Team</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer bg-dark text-light py-4">
+      <div class="container text-center">
+        <p class="mb-2">© <span id="y"></span> SportsbyA Tech Private Limited</p>
+        <div class="d-flex justify-content-center gap-3">
+          <a href="https://sportsbya.com" class="text-light text-decoration-none">sportsbya.com</a>
+          <a href="https://shootingsports.in" class="text-light text-decoration-none" target="_blank">shootingsports.in</a>
+          <a href="https://sportsmis.com" class="text-light text-decoration-none" target="_blank">sportsmis.com</a>
+          <a href="https://sportsinfrax.com" class="text-light text-decoration-none" target="_blank">sportsinfrax.com</a>
+          <a href="https://dewroute.com/" class="text-light text-decoration-none" target="_blank">dewroute.com</a>
+          <a href="https://sportsodi.com/" class="text-light text-decoration-none" target="_blank">sportsodi.com</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  </body>
+</html>
