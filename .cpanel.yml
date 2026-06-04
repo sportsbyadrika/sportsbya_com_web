@@ -1,0 +1,26 @@
+---
+deployment:
+  tasks:
+    # Destination (the live site's document root)
+    - export DEPLOYPATH=/home/shooting/public_html/sportsbya.com2
+    - /bin/mkdir -p "$DEPLOYPATH"
+    - /bin/mkdir -p "$DEPLOYPATH/includes"
+
+    # Preserve the live config (real DB/SMTP credentials) across deploys.
+    - /bin/test -f "$DEPLOYPATH/includes/config.php" && /bin/cp -f "$DEPLOYPATH/includes/config.php" /tmp/sba_config_backup.php || true
+
+    # Copy the application files (non-hidden entries, recursively).
+    - /bin/cp -R -f ./* "$DEPLOYPATH/"
+
+    # Copy hidden files that the glob above skips (Apache rewrite rules).
+    - /bin/cp -f ./.htaccess "$DEPLOYPATH/.htaccess"
+
+    # Restore the preserved config so live credentials are never overwritten.
+    # On the very first deploy there is no backup, so the placeholder config
+    # from the repository is kept for you to edit.
+    - /bin/test -f /tmp/sba_config_backup.php && /bin/cp -f /tmp/sba_config_backup.php "$DEPLOYPATH/includes/config.php" || true
+    - /bin/rm -f /tmp/sba_config_backup.php
+
+    # Make sure the upload directories exist and stay writable.
+    - /bin/mkdir -p "$DEPLOYPATH/uploads/clients" "$DEPLOYPATH/uploads/blog"
+    - /bin/chmod -R 0755 "$DEPLOYPATH/uploads"
