@@ -46,6 +46,12 @@ if (!preg_match('/^[0-9+\-\s()]{7,20}$/', $mobile)) {
     exit;
 }
 
+if (empty($_POST['consent_notifications']) || empty($_POST['consent_terms'])) {
+    http_response_code(422);
+    echo json_encode(['ok' => false, 'message' => 'Please tick both consent checkboxes to continue.']);
+    exit;
+}
+
 $remoteIp  = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
 

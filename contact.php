@@ -82,6 +82,21 @@ require __DIR__ . '/includes/header.php';
                             <textarea id="contactMessage" name="message" rows="4" required placeholder="Tell us about your sport, goals or the problem you're solving."
                                       class="mt-1.5 w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20"></textarea>
                         </div>
+                        <div class="mt-5 space-y-3">
+                            <label class="flex items-start gap-3 text-sm text-slate-600">
+                                <input type="checkbox" name="consent_notifications" value="1" required
+                                       class="mt-0.5 h-4 w-4 rounded border-slate-300 text-brand focus:ring-brand">
+                                <span>I hereby authorize to send notifications on SMS/Messages/Promotional/Informational messages</span>
+                            </label>
+                            <label class="flex items-start gap-3 text-sm text-slate-600">
+                                <input type="checkbox" name="consent_terms" value="1" required
+                                       class="mt-0.5 h-4 w-4 rounded border-slate-300 text-brand focus:ring-brand">
+                                <span>By submitting the form, you've read and accepted our
+                                    <a href="<?= url('terms-and-conditions') ?>" class="font-medium text-brand hover:underline">terms and conditions</a>
+                                    and our
+                                    <a href="<?= url('privacy-policy') ?>" class="font-medium text-brand hover:underline">privacy policy</a>.</span>
+                            </label>
+                        </div>
                         <div class="mt-6 flex flex-wrap items-center gap-4">
                             <button type="submit" id="contactSubmit"
                                     class="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-brand-dark disabled:opacity-60">
