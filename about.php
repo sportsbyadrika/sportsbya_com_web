@@ -41,7 +41,6 @@ require __DIR__ . '/includes/header.php';
             <?php
             $leaders = [
                 ['adrika.jpg', 'Adrika Narayanan', 'Founder & Director', 'Adrika is a renowned pistol shooter who represented Kerala at the National Games 2025 while pursuing her B.Tech at the Government Engineering College, Barton Hill, Thiruvananthapuram. She brings the athlete\'s perspective to every product sprint.', 'https://www.linkedin.com/in/adrika-narayanan-5419a5275/'],
-                ['ng.jpg', 'Narayanan G', 'Consultant Product Owner', 'Narayanan steers our product roadmaps with a focus on usability, compliance and scalable workflows for federations and academies. He works closely with athletes and coaches to translate needs into elegant platform experiences.', 'https://www.linkedin.com/in/narayananng/'],
             ];
             foreach ($leaders as [$img, $name, $role, $bio, $linkedin]): ?>
                 <article class="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
