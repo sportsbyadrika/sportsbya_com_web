@@ -6,9 +6,11 @@ $adminCurrent = basename($_SERVER['SCRIPT_NAME'], '.php');
 $adminTitle   = $adminTitle ?? 'Admin';
 
 $adminNav = [
-    'index'   => ['label' => 'Dashboard',   'icon' => 'bi-speedometer2'],
-    'clients' => ['label' => 'Our Clients', 'icon' => 'bi-people'],
-    'blog'    => ['label' => 'Blog',         'icon' => 'bi-journal-text'],
+    'index'    => ['label' => 'Dashboard',   'icon' => 'bi-speedometer2'],
+    'clients'  => ['label' => 'Our Clients', 'icon' => 'bi-people'],
+    'blog'     => ['label' => 'Blog',         'icon' => 'bi-journal-text'],
+    'receipts' => ['label' => 'Receipts',     'icon' => 'bi-receipt'],
+    'payments' => ['label' => 'Payments',     'icon' => 'bi-cash-coin'],
 ];
 ?>
 <!doctype html>

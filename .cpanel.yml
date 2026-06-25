@@ -22,5 +22,5 @@ deployment:
     - /bin/rm -f /tmp/sba_config_backup.php
 
     # Make sure the upload directories exist and stay writable.
-    - /bin/mkdir -p "$DEPLOYPATH/uploads/clients" "$DEPLOYPATH/uploads/blog"
+    - /bin/mkdir -p "$DEPLOYPATH/uploads/clients" "$DEPLOYPATH/uploads/blog" "$DEPLOYPATH/uploads/letterhead"
     - /bin/chmod -R 0755 "$DEPLOYPATH/uploads"

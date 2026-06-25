@@ -56,3 +56,40 @@ CREATE TABLE IF NOT EXISTS contact_messages (
     PRIMARY KEY (id),
     KEY idx_contact_created (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS settings (
+    k VARCHAR(64) NOT NULL,
+    v MEDIUMTEXT  NULL,
+    PRIMARY KEY (k)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS receipts (
+    id            INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    receipt_no    VARCHAR(60)  NOT NULL,
+    receipt_date  DATE         NOT NULL,
+    received_from VARCHAR(200) NOT NULL DEFAULT '',
+    payment_mode  VARCHAR(60)  NOT NULL DEFAULT '',
+    reference     VARCHAR(120) NOT NULL DEFAULT '',
+    items         MEDIUMTEXT   NULL,
+    total         DECIMAL(12,2) NOT NULL DEFAULT 0,
+    notes         VARCHAR(500) NOT NULL DEFAULT '',
+    created_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    KEY idx_receipt_date (receipt_date)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS payments (
+    id           INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    payment_date DATE         NOT NULL,
+    paid_to      VARCHAR(200) NOT NULL DEFAULT '',
+    description  VARCHAR(300) NOT NULL DEFAULT '',
+    payment_mode VARCHAR(60)  NOT NULL DEFAULT '',
+    reference    VARCHAR(120) NOT NULL DEFAULT '',
+    amount       DECIMAL(12,2) NOT NULL DEFAULT 0,
+    notes        VARCHAR(500) NOT NULL DEFAULT '',
+    created_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    KEY idx_payment_date (payment_date)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
