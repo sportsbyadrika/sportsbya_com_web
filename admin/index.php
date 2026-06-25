@@ -1,21 +1,25 @@
 <?php
+require_once __DIR__ . '/../includes/settings.php';
 $adminTitle = 'Dashboard';
 require __DIR__ . '/header.php';
+ensure_app_tables();
 
 $clientCount    = (int) (db_one('SELECT COUNT(*) AS c FROM clients')['c'] ?? 0);
 $postCount      = (int) (db_one("SELECT COUNT(*) AS c FROM blog_posts")['c'] ?? 0);
-$publishedCount = (int) (db_one("SELECT COUNT(*) AS c FROM blog_posts WHERE status='published'")['c'] ?? 0);
 $messageCount   = (int) (db_one('SELECT COUNT(*) AS c FROM contact_messages')['c'] ?? 0);
+$receiptCount   = (int) (db_one('SELECT COUNT(*) AS c FROM receipts')['c'] ?? 0);
+$paymentCount   = (int) (db_one('SELECT COUNT(*) AS c FROM payments')['c'] ?? 0);
 $recentMessages = db_all('SELECT name, email, mobile, message, created_at FROM contact_messages ORDER BY created_at DESC LIMIT 5');
 
 $cards = [
     ['Clients', $clientCount, 'bi-people', admin_url('clients')],
     ['Blog posts', $postCount, 'bi-journal-text', admin_url('blog')],
-    ['Published', $publishedCount, 'bi-check-circle', admin_url('blog')],
+    ['Receipts', $receiptCount, 'bi-receipt', admin_url('receipts')],
+    ['Payments', $paymentCount, 'bi-cash-coin', admin_url('payments')],
     ['Enquiries', $messageCount, 'bi-envelope', '#'],
 ];
 ?>
-<div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+<div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
     <?php foreach ($cards as [$label, $value, $icon, $href]): ?>
         <a href="<?= htmlspecialchars($href) ?>" class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition hover:shadow-md">
             <div class="flex items-center justify-between">
@@ -33,6 +37,8 @@ $cards = [
         <div class="mt-4 flex flex-wrap gap-3">
             <a href="<?= admin_url('clients?action=new') ?>" class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark"><i class="bi bi-plus-lg"></i> Add client</a>
             <a href="<?= admin_url('blog?action=new') ?>" class="inline-flex items-center gap-2 rounded-full border border-brand px-5 py-2.5 text-sm font-semibold text-brand transition hover:bg-brand hover:text-white"><i class="bi bi-plus-lg"></i> New blog post</a>
+            <a href="<?= admin_url('receipts?action=new') ?>" class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"><i class="bi bi-receipt"></i> New receipt</a>
+            <a href="<?= admin_url('payments?action=new') ?>" class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"><i class="bi bi-cash-coin"></i> Record payment</a>
         </div>
     </div>
 
