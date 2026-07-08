@@ -76,4 +76,21 @@ return [
         'password' => $env('ADMIN_PASS', 'ChangeMe@123'),
         'name'     => 'Administrator',
     ],
+
+    // ---- Anti-spam / anti-bot for the public contact form ----
+    'security' => [
+        // A long random string used to sign form tokens. Leave blank to auto-derive
+        // a stable secret from your DB/SMTP settings; set your own for best results.
+        'form_secret'   => $env('FORM_SECRET', ''),
+        // Minimum seconds a human needs to fill the form (submissions faster than
+        // this are treated as bots). Maximum is how long a loaded form stays valid.
+        'min_seconds'   => (int) $env('FORM_MIN_SECONDS', '3'),
+        'max_seconds'   => (int) $env('FORM_MAX_SECONDS', '7200'),
+        // Max contact submissions allowed per IP address per hour.
+        'rate_per_hour' => (int) $env('FORM_RATE_PER_HOUR', '6'),
+        // Optional Cloudflare Turnstile (free). Leave both blank to disable.
+        // Get keys at https://dash.cloudflare.com/?to=/:account/turnstile
+        'turnstile_site_key' => $env('TURNSTILE_SITE_KEY', ''),
+        'turnstile_secret'   => $env('TURNSTILE_SECRET', ''),
+    ],
 ];

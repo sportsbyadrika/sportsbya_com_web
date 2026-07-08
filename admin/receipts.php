@@ -14,7 +14,9 @@ function parse_receipt_items(): array
 {
     $descs = $_POST['desc'] ?? [];
     $qtys  = $_POST['qty'] ?? [];
+    $units = $_POST['unit'] ?? [];
     $rates = $_POST['rate'] ?? [];
+    $discs = $_POST['disc'] ?? [];
     $items = [];
     $total = 0.0;
     foreach ((array) $descs as $i => $d) {
@@ -22,11 +24,13 @@ function parse_receipt_items(): array
         if ($d === '') {
             continue;
         }
-        $q = (float) ($qtys[$i] ?? 0);
-        $r = (float) ($rates[$i] ?? 0);
-        $amt = round($q * $r, 2);
+        $q    = (float) ($qtys[$i] ?? 0);
+        $u    = trim((string) ($units[$i] ?? ''));
+        $r    = (float) ($rates[$i] ?? 0);
+        $disc = (float) ($discs[$i] ?? 0);
+        $amt  = round($q * $r - $disc, 2);
         $total += $amt;
-        $items[] = ['desc' => $d, 'qty' => $q, 'rate' => $r, 'amount' => $amt];
+        $items[] = ['desc' => $d, 'qty' => $q, 'unit' => $u, 'rate' => $r, 'disc' => $disc, 'amount' => $amt];
     }
     return [$items, round($total, 2)];
 }
@@ -199,32 +203,37 @@ if ($action === 'new' || $action === 'edit' || $action === 'form'):
         <!-- Items -->
         <div class="mt-6">
             <label class="block text-sm font-medium text-slate-700">Items *</label>
-            <div class="mt-2 overflow-hidden rounded-xl ring-1 ring-slate-200">
+            <p class="mb-2 text-xs text-slate-400">Amount = Qty × Rate − Discount. Unit is free text (e.g. nos, hrs, kg).</p>
+            <div class="mt-2 overflow-x-auto rounded-xl ring-1 ring-slate-200">
                 <table class="min-w-full text-sm">
                     <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                         <tr>
-                            <th class="px-3 py-2">Description</th>
-                            <th class="w-20 px-3 py-2">Qty</th>
-                            <th class="w-28 px-3 py-2">Rate</th>
-                            <th class="w-28 px-3 py-2 text-right">Amount</th>
-                            <th class="w-10 px-3 py-2"></th>
+                            <th class="px-2 py-2">Description</th>
+                            <th class="w-16 px-2 py-2">Qty</th>
+                            <th class="w-20 px-2 py-2">Unit</th>
+                            <th class="w-24 px-2 py-2">Rate</th>
+                            <th class="w-24 px-2 py-2">Discount</th>
+                            <th class="w-24 px-2 py-2 text-right">Amount</th>
+                            <th class="w-8 px-2 py-2"></th>
                         </tr>
                     </thead>
                     <tbody id="itemRows">
                         <?php foreach ($items as $it): ?>
                             <tr class="item-row border-t border-slate-100">
-                                <td class="px-3 py-2"><input type="text" name="desc[]" value="<?= htmlspecialchars($it['desc'] ?? '') ?>" class="w-full rounded-lg border border-slate-200 px-3 py-2 outline-none focus:border-brand"></td>
-                                <td class="px-3 py-2"><input type="number" step="any" min="0" name="qty[]" value="<?= htmlspecialchars((string) ($it['qty'] ?? 1)) ?>" class="qty w-full rounded-lg border border-slate-200 px-2 py-2 text-right outline-none focus:border-brand"></td>
-                                <td class="px-3 py-2"><input type="number" step="any" min="0" name="rate[]" value="<?= htmlspecialchars((string) ($it['rate'] ?? 0)) ?>" class="rate w-full rounded-lg border border-slate-200 px-2 py-2 text-right outline-none focus:border-brand"></td>
-                                <td class="px-3 py-2 text-right"><span class="amount font-medium">0.00</span></td>
-                                <td class="px-3 py-2 text-center"><button type="button" class="removeRow text-slate-400 hover:text-red-600"><i class="bi bi-x-lg"></i></button></td>
+                                <td class="px-2 py-2"><input type="text" name="desc[]" value="<?= htmlspecialchars($it['desc'] ?? '') ?>" class="w-full rounded-lg border border-slate-200 px-3 py-2 outline-none focus:border-brand"></td>
+                                <td class="px-2 py-2"><input type="number" step="any" min="0" name="qty[]" value="<?= htmlspecialchars((string) ($it['qty'] ?? 1)) ?>" class="qty w-full rounded-lg border border-slate-200 px-2 py-2 text-right outline-none focus:border-brand"></td>
+                                <td class="px-2 py-2"><input type="text" name="unit[]" value="<?= htmlspecialchars($it['unit'] ?? '') ?>" placeholder="nos" class="w-full rounded-lg border border-slate-200 px-2 py-2 outline-none focus:border-brand"></td>
+                                <td class="px-2 py-2"><input type="number" step="any" min="0" name="rate[]" value="<?= htmlspecialchars((string) ($it['rate'] ?? 0)) ?>" class="rate w-full rounded-lg border border-slate-200 px-2 py-2 text-right outline-none focus:border-brand"></td>
+                                <td class="px-2 py-2"><input type="number" step="any" min="0" name="disc[]" value="<?= htmlspecialchars((string) ($it['disc'] ?? 0)) ?>" class="disc w-full rounded-lg border border-slate-200 px-2 py-2 text-right outline-none focus:border-brand"></td>
+                                <td class="px-2 py-2 text-right"><span class="amount font-medium">0.00</span></td>
+                                <td class="px-2 py-2 text-center"><button type="button" class="removeRow text-slate-400 hover:text-red-600"><i class="bi bi-x-lg"></i></button></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                     <tfoot>
                         <tr class="border-t border-slate-200 bg-slate-50">
-                            <td colspan="3" class="px-3 py-2 text-right font-semibold">Total</td>
-                            <td class="px-3 py-2 text-right font-bold">₹<span id="grandTotal">0.00</span></td>
+                            <td colspan="5" class="px-2 py-2 text-right font-semibold">Total</td>
+                            <td class="px-2 py-2 text-right font-bold">₹<span id="grandTotal">0.00</span></td>
                             <td></td>
                         </tr>
                     </tfoot>
@@ -249,11 +258,13 @@ if ($action === 'new' || $action === 'edit' || $action === 'form'):
     <!-- Row template -->
     <template id="rowTpl">
         <tr class="item-row border-t border-slate-100">
-            <td class="px-3 py-2"><input type="text" name="desc[]" class="w-full rounded-lg border border-slate-200 px-3 py-2 outline-none focus:border-brand"></td>
-            <td class="px-3 py-2"><input type="number" step="any" min="0" name="qty[]" value="1" class="qty w-full rounded-lg border border-slate-200 px-2 py-2 text-right outline-none focus:border-brand"></td>
-            <td class="px-3 py-2"><input type="number" step="any" min="0" name="rate[]" value="0" class="rate w-full rounded-lg border border-slate-200 px-2 py-2 text-right outline-none focus:border-brand"></td>
-            <td class="px-3 py-2 text-right"><span class="amount font-medium">0.00</span></td>
-            <td class="px-3 py-2 text-center"><button type="button" class="removeRow text-slate-400 hover:text-red-600"><i class="bi bi-x-lg"></i></button></td>
+            <td class="px-2 py-2"><input type="text" name="desc[]" class="w-full rounded-lg border border-slate-200 px-3 py-2 outline-none focus:border-brand"></td>
+            <td class="px-2 py-2"><input type="number" step="any" min="0" name="qty[]" value="1" class="qty w-full rounded-lg border border-slate-200 px-2 py-2 text-right outline-none focus:border-brand"></td>
+            <td class="px-2 py-2"><input type="text" name="unit[]" placeholder="nos" class="w-full rounded-lg border border-slate-200 px-2 py-2 outline-none focus:border-brand"></td>
+            <td class="px-2 py-2"><input type="number" step="any" min="0" name="rate[]" value="0" class="rate w-full rounded-lg border border-slate-200 px-2 py-2 text-right outline-none focus:border-brand"></td>
+            <td class="px-2 py-2"><input type="number" step="any" min="0" name="disc[]" value="0" class="disc w-full rounded-lg border border-slate-200 px-2 py-2 text-right outline-none focus:border-brand"></td>
+            <td class="px-2 py-2 text-right"><span class="amount font-medium">0.00</span></td>
+            <td class="px-2 py-2 text-center"><button type="button" class="removeRow text-slate-400 hover:text-red-600"><i class="bi bi-x-lg"></i></button></td>
         </tr>
     </template>
 
@@ -266,7 +277,8 @@ if ($action === 'new' || $action === 'edit' || $action === 'form'):
                 rows.querySelectorAll('.item-row').forEach(function (row) {
                     var q = parseFloat(row.querySelector('.qty').value) || 0;
                     var r = parseFloat(row.querySelector('.rate').value) || 0;
-                    var amt = q * r;
+                    var d = parseFloat(row.querySelector('.disc').value) || 0;
+                    var amt = q * r - d;
                     row.querySelector('.amount').textContent = amt.toFixed(2);
                     total += amt;
                 });
