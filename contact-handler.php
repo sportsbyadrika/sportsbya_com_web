@@ -17,9 +17,29 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     exit;
 }
 
-// Honeypot — silently accept bot submissions without doing anything.
-if (!empty($_POST['website'])) {
+$sec = config('security');
+
+/** Silently pretend success — used to starve bots of useful feedback. */
+$fakeOk = static function (): void {
     echo json_encode(['ok' => true, 'message' => 'Thanks! We will connect with you soon.']);
+    exit;
+};
+
+// 1) Honeypot — a hidden field only bots fill in.
+if (!empty($_POST['website'])) {
+    $fakeOk();
+}
+
+// 2) JS-proof field — set only by a real browser running our script.
+if (($_POST['js'] ?? '') !== 'ok') {
+    $fakeOk();
+}
+
+// 3) Signed time-trap token — blocks direct POSTs, forged/stale tokens and
+//    submissions that arrive implausibly fast (i.e. automated).
+if (!form_token_valid((string) ($_POST['form_ts'] ?? ''), (string) ($_POST['form_sig'] ?? ''), (int) $sec['min_seconds'], (int) $sec['max_seconds'])) {
+    http_response_code(429);
+    echo json_encode(['ok' => false, 'message' => 'Please reload the page and try again.']);
     exit;
 }
 
@@ -55,8 +75,42 @@ if (empty($_POST['consent_notifications']) || empty($_POST['consent_terms'])) {
 $remoteIp  = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
 
-// 1) Persist the enquiry so nothing is lost even if email delivery hiccups.
 $pdo = db();
+
+// 4) Per-IP rate limit — cap submissions per hour from the same address.
+$ratePerHour = (int) ($sec['rate_per_hour'] ?? 0);
+if ($pdo && $ratePerHour > 0 && $remoteIp !== 'unknown') {
+    try {
+        $stmt = $pdo->prepare('SELECT COUNT(*) FROM contact_messages WHERE ip = ? AND created_at >= (NOW() - INTERVAL 1 HOUR)');
+        $stmt->execute([$remoteIp]);
+        if ((int) $stmt->fetchColumn() >= $ratePerHour) {
+            http_response_code(429);
+            echo json_encode(['ok' => false, 'message' => 'You have sent several messages recently. Please try again later or email us directly.']);
+            exit;
+        }
+    } catch (Throwable $e) {
+        error_log('Rate-limit check failed: ' . $e->getMessage());
+    }
+}
+
+// 5) Optional Cloudflare Turnstile verification (only when configured).
+if (!empty($sec['turnstile_secret'])) {
+    $token = (string) ($_POST['cf-turnstile-response'] ?? '');
+    if ($token === '') {
+        http_response_code(422);
+        echo json_encode(['ok' => false, 'message' => 'Please complete the verification challenge.']);
+        exit;
+    }
+    $verify = turnstile_verify($sec['turnstile_secret'], $token, $remoteIp);
+    // Fail closed on an explicit rejection; fail open only if the network call errored.
+    if ($verify === false) {
+        http_response_code(422);
+        echo json_encode(['ok' => false, 'message' => 'Verification failed. Please try again.']);
+        exit;
+    }
+}
+
+// 6) Persist the enquiry so nothing is lost even if email delivery hiccups.
 if ($pdo) {
     try {
         $stmt = $pdo->prepare(

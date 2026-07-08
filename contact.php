@@ -5,6 +5,9 @@ $site            = config('site');
 $pageTitle       = 'Contact Us — SportsbyA Tech';
 $pageDescription = 'Connect with the SportsbyA Tech team for product enquiries, partnerships and support.';
 
+[$formTs, $formSig] = form_token();
+$turnstileKey = config('security')['turnstile_site_key'] ?? '';
+
 require __DIR__ . '/includes/header.php';
 ?>
 
@@ -58,6 +61,10 @@ require __DIR__ . '/includes/header.php';
                     <form id="contactForm" action="<?= url('contact-handler') ?>" method="POST" novalidate>
                         <!-- Honeypot (hidden from humans) -->
                         <input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
+                        <!-- Anti-bot: signed time token + JS-proof field -->
+                        <input type="hidden" name="form_ts" value="<?= e($formTs) ?>">
+                        <input type="hidden" name="form_sig" value="<?= e($formSig) ?>">
+                        <input type="hidden" name="js" id="jsField" value="">
 
                         <div class="grid gap-5 sm:grid-cols-2">
                             <div>
@@ -97,6 +104,9 @@ require __DIR__ . '/includes/header.php';
                                     <a href="<?= url('privacy-policy') ?>" class="font-medium text-brand hover:underline">privacy policy</a>.</span>
                             </label>
                         </div>
+                        <?php if ($turnstileKey): ?>
+                            <div class="cf-turnstile mt-5" data-sitekey="<?= e($turnstileKey) ?>" data-theme="light"></div>
+                        <?php endif; ?>
                         <div class="mt-6 flex flex-wrap items-center gap-4">
                             <button type="submit" id="contactSubmit"
                                     class="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-brand-dark disabled:opacity-60">
@@ -111,12 +121,19 @@ require __DIR__ . '/includes/header.php';
     </div>
 </section>
 
+<?php if ($turnstileKey): ?>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<?php endif; ?>
 <script>
     (function () {
         var form = document.getElementById('contactForm');
         var alertBox = document.getElementById('contactAlert');
         var submit = document.getElementById('contactSubmit');
         if (!form) return;
+
+        // Prove a real browser rendered and ran this page (blocks non-JS bots).
+        var jsField = document.getElementById('jsField');
+        if (jsField) { jsField.value = 'ok'; }
 
         function showAlert(message, ok) {
             alertBox.textContent = message;
