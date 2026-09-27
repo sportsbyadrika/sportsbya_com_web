@@ -91,19 +91,33 @@ require __DIR__ . '/includes/header.php';
         <div class="mt-12 grid gap-6 lg:grid-cols-3">
             <?php
             $platforms = [
-                ['bi-buildings', 'Sports Infrastructure', 'sportsinfrax.com', 'https://sportsinfrax.com', 'Manage sports facilities, venues and assets with online discovery, bookings and maintenance.', [
-                    'Facility & venue directory (grounds, courts, ranges, pools)',
-                    'Online slot booking with e-payments and reminders',
-                    'Membership, passes and access management',
-                    'Maintenance, asset and staff scheduling',
-                    'Utilization, occupancy and revenue analytics',
-                ]],
                 ['bi-trophy', 'Multi-Sport MIS', 'sportsmis.com', 'https://sportsmis.com', 'A single operating system for federations, leagues and academies across every sport.', [
                     'Online registrations with e-payments and WhatsApp confirmations',
                     'Event draws, schedules and live results dashboards',
                     'Digital certificates and automated participant communication',
                     'Analytics for participation, revenues and performance trends',
                     'Extensible APIs for websites, apps and broadcast overlays',
+                ]],
+                ['bi-bullseye', 'Shooting Sports', 'shootingsports.in', 'https://shootingsports.in', 'Purpose-built for rifle, pistol and shotgun events with compliant scoring and deep analytics.', [
+                    'Event handling: match setup, relays, squadding, live scores',
+                    'Scoring workflows with ISSF / NRAI validations',
+                    'Automated reports, certificates and medal tallies',
+                    'Association & club MIS: memberships, batches, events, notices',
+                    'Performance analytics: shot charts, group size, trends',
+                ]],
+                ['bi-mortarboard', 'Campus Champions', 'campuschampions.in', 'https://campuschampions.in', 'Inter-school and inter-college sports meets — run end to end from entries to the podium.', [
+                    'Institution & student registrations with age / class categories',
+                    'Multi-event scheduling, heats and house / team allocation',
+                    'Live scores, points tables and medal tallies',
+                    'Certificates, participation records and reports',
+                    'Notices and communication for coordinators and parents',
+                ]],
+                ['bi-buildings', 'Sports Infrastructure', 'sportsinfrax.com', 'https://sportsinfrax.com', 'Manage sports facilities, venues and assets with online discovery, bookings and maintenance.', [
+                    'Facility & venue directory (grounds, courts, ranges, pools)',
+                    'Online slot booking with e-payments and reminders',
+                    'Membership, passes and access management',
+                    'Maintenance, asset and staff scheduling',
+                    'Utilization, occupancy and revenue analytics',
                 ]],
                 ['bi-people', 'Clubs & Wellness', 'dewroute.com', 'https://dewroute.com/', 'Ideal for small clubs, gyms, institutions, healthcare programs and community initiatives.', [
                     'Membership management with plans, renewals and invoices',
